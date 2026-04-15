@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength Program Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f5f0e8;
+    --accent: #c8392b;
+    --accent2: #e8a020;
+    --muted: #888;
+    --border: #d0c8b8;
+    --card: #fffdf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 4px solid var(--accent);
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  header span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 6px;
+    margin: 36px 0 18px;
+  }
+
+  /* ── FORM GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .field input, .field select, .field textarea {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent);
+  }
+  .field textarea { resize: vertical; min-height: 72px; }
+
+  /* ── CHECKBOX GROUP ── */
+  .check-group { display: flex; flex-wrap: wrap; gap: 10px; }
+  .check-group label {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 13px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .check-group input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; }
+  .check-group label:has(input:checked) {
+    border-color: var(--accent);
+    background: #fdf0ee;
+    font-weight: 600;
+  }
+
+  /* ── GENERATE BTN ── */
+  .btn-generate {
+    margin-top: 40px;
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-generate:hover { background: #a82d22; transform: translateY(-1px); }
+  .btn-generate:active { transform: translateY(0); }
+
+  /* ── OUTPUT ── */
+  #output { margin-top: 48px; }
+  #output.hidden { display: none; }
+
+  .program-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 32px 36px;
+    border-radius: 6px 6px 0 0;
+  }
+  .program-header .prog-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    color: #fff;
+    line-height: 1;
+  }
+  .program-header .prog-tagline {
+    font-size: 0.85rem;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 24px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-item .meta-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--accent2);
+    line-height: 1;
+  }
+  .meta-item .meta-key {
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  .program-body {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 32px 36px;
+  }
+
+  .prog-section { margin-bottom: 32px; }
+  .prog-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    border-bottom: 1.5px solid var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+
+  /* Day cards */
+  .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .day-card {
+    background: var(--paper);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .day-card .day-header {
+    background: var(--ink);
+    color: var(--accent2);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .day-card .day-header span { color: #888; font-size: 0.7rem; letter-spacing: 1px; font-family: 'DM Mono', monospace; }
+  .day-card .exercises { padding: 12px 14px; }
+  .day-card .ex-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .day-card .ex-row:last-child { border-bottom: none; }
+  .day-card .ex-name { font-weight: 500; }
+  .day-card .ex-sets { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); }
+
+  /* Phase table */
+  .phase-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .phase-table th {
+    background: var(--ink); color: var(--accent2);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px; font-size: 0.85rem;
+    padding: 10px 14px; text-align: left;
+  }
+  .phase-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .phase-table tr:last-child td { border-bottom: none; }
+  .phase-table tr:nth-child(even) td { background: #faf8f2; }
+
+  /* Nutrition grid */
+  .macro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .macro-card {
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+    text-align: center;
+  }
+  .macro-card .macro-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .macro-card .macro-unit { font-size: 0.7rem; color: var(--muted); }
+  .macro-card .macro-label { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; font-weight: 600; }
+
+  /* Prose text */
+  .prog-para { font-size: 14px; line-height: 1.7; color: #333; margin-bottom: 10px; }
+  .prog-list { padding-left: 18px; }
+  .prog-list li { font-size: 13px; line-height: 1.8; color: #333; }
+
+  /* Print / copy */
+  .action-row { display: flex; gap: 12px; margin-top: 28px; }
+  .btn-action {
+    flex: 1;
+    padding: 13px;
+    border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border: 2px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .btn-action:hover { background: var(--ink); color: #fff; }
+  .btn-action.primary { background: var(--ink); color: #fff; }
+  .btn-action.primary:hover { background: #333; }
+
+  @media (max-width: 600px) {
+    header { padding: 20px; }
+    header h1 { font-size: 2rem; }
+    .container { padding: 24px 16px 60px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .days-grid { grid-template-columns: 1fr; }
+    .macro-grid { grid-template-columns: 1fr; }
+    .program-header, .program-body { padding: 24px 20px; }
+  }
+
+  @media print {
+    header, .btn-generate, .action-row, .section-label ~ .grid-2, form { display: none !important; }
+    #output.hidden { display: block !important; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Program Builder</h1>
+  <span>Strength &amp; Conditioning</span>
+</header>
+
+<div class="container">
+
+  <!-- ── FORM ── -->
+  <form id="programForm">
+
+    <div class="section-label">Client Details</div>
+    <div class="grid-3">
+      <div class="field"><label>First Name</label><input type="text" id="name" placeholder="First name" required></div>
+      <div class="field"><label>Weight (kg)</label><input type="number" id="weight" placeholder="e.g. 62"></div>
+      <div class="field"><label>Height (cm)</label><input type="number" id="height" placeholder="e.g. 168"></div>
+    </div>
+
+    <div class="section-label">Program Settings</div>
+    <div class="grid-3">
+      <div class="field">
+        <label>Goal</label>
+        <select id="goal">
+          <option value="muscle_gain">Muscle Gain + Weight Gain</option>
+          <option value="fat_loss">Fat Loss + Tone</option>
+          <option value="strength">Pure Strength</option>
+          <option value="maintenance">Maintenance + Recomp</option>
+          <option value="athletic">Athletic Performance</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Experience Level</label>
+        <select id="level">
+          <option value="beginner">Beginner (0–1 yr)</option>
+          <option value="intermediate" selected>Intermediate (1–3 yr)</option>
+          <option value="advanced">Advanced (3+ yr)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Days per Week</label>
+        <select id="days">
+          <option value="3">3 Days</option>
+          <option value="4">4 Days</option>
+          <option value="5" selected>5 Days</option>
+          <option value="6">6 Days</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px">
+      <div class="field">
+        <label>Equipment Access</label>
+        <select id="equipment">
+          <option value="full_gym">Full Gym</option>
+          <option value="home_dumbbells">Home — Dumbbells Only</option>
+          <option value="home_full">Home — Full Setup</option>
+          <option value="barbell_only">Barbell + Rack Only</option>
+          <option value="bodyweight">Bodyweight Only</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Program Duration</label>
+        <select id="duration">
+          <option value="8">8 Weeks</option>
+          <option value="12" selected>12 Weeks</option>
+          <option value="16">16 Weeks</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-label">Focus Areas</div>
+    <div class="check-group" id="focusAreas">
+      <label><input type="checkbox" value="upper_body" checked> Upper Body</label>
+      <label><input type="checkbox" value="lower_body" checked> Lower Body</label>
+      <label><input type="checkbox" value="glutes" checked> Glutes</label>
+      <label><input type="checkbox" value="core"> Core</label>
+      <label><input type="checkbox" value="back"> Back</label>
+      <label><input type="checkbox" value="shoulders"> Shoulders</label>
+      <label><input type="checkbox" value="arms"> Arms</label>
+      <label><input type="checkbox" value="cardio"> Cardio Base</label>
+    </div>
+
+    <div class="section-label">Nutrition Context</div>
+    <div class="grid-2">
+      <div class="field">
+        <label>Eating Situation</label>
+        <select id="eatingSit">
+          <option value="self_cook">Cooks own food</option>
+          <option value="mess_hall">Mess Hall / Canteen</option>
+          <option value="office">Office worker — eating out often</option>
+          <option value="student">Student — budget constrained</option>
+          <option value="family">Family meals — limited control</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Daily Calorie Target</label>
+        <input type="number" id="calories" placeholder="Leave blank to auto-calculate">
+      </div>
+    </div>
+
+    <div class="section-label">Additional Notes</div>
+    <div class="field">
+      <label>Injuries / Limitations / Special Considerations</label>
+      <textarea id="notes" placeholder="e.g. Bad left knee — avoid deep squats. Trains at 6am before work."></textarea>
+    </div>
+
+    <button type="submit" class="btn-generate">Generate Program →</button>
+  </form>
+
+  <!-- ── OUTPUT ── -->
+  <div id="output" class="hidden"></div>
+
+</div>
+
+<script>
+// ── DATA TABLES ──
+
+const PROGRAMS = {
+  muscle_gain: {
+    tagline: "Build Strong. Eat Bold. Rise Powerful.",
+    repRange: "6–15 (Progressive Overload)",
+    rest: "60–120 seconds between sets",
+    progression: "Add weight every 1–2 weeks",
+    calorieAdjust: +400,   // surplus
+    proteinMultiplier: 1.0, // g per lb BW
+    carbsG: 280, fatsG: 70,
+    phases: [
+      { weeks: "1–4", name: "Foundation", desc: "Build base strength, learn movement patterns. 3–4 sets, 10–15 reps. Focus on form." },
+      { weeks: "5–8", name: "Hypertrophy", desc: "Maximize muscle growth. Increase volume and intensity. 4 sets, 8–12 reps." },
+      { weeks: "9–12", name: "Strength + Size", desc: "Heavy compound lifts + accessory work. 4–5 sets, 5–10 reps. Peak strength." }
+    ]
+  },
+  fat_loss: {
+    tagline: "Lean. Strong. Unstoppable.",
+    repRange: "10–20 (Metabolic)",
+    rest: "45–75 seconds between sets",
+    progression: "Increase reps before weight",
+    calorieAdjust: -400,
+    proteinMultiplier: 1.1,
+    carbsG: 180, fatsG: 60,
+    phases: [
+      { weeks: "1–4", name: "Adaptation", desc: "Establish movement quality and aerobic base. 3 sets, 12–15 reps." },
+      { weeks: "5–8", name: "Fat Burning", desc: "Higher density training. Supersets and circuits. 4 sets, 10–15 reps." },
+      { weeks: "9–12", name: "Conditioning", desc: "Maintain muscle, peak conditioning. 4 sets, 8–15 reps mixed intensity." }
+    ]
+  },
+  strength: {
+    tagline: "Move Heavy. Move Often. Move Well.",
+    repRange: "1–8 (Strength Focus)",
+    rest: "2–4 minutes between sets",
+    progression: "Linear progression on main lifts",
+    calorieAdjust: +200,
+    proteinMultiplier: 1.0,
+    carbsG: 300, fatsG: 80,
+    phases: [
+      { weeks: "1–4", name: "Technique", desc: "Perfect movement patterns. 4 sets, 5–6 reps at 75–80% 1RM." },
+      { weeks: "5–8", name: "Intensity", desc: "Increase load. 4–5 sets, 3–5 reps at 80–87% 1RM." },
+      { weeks: "9–12", name: "Peak", desc: "Peak strength expression. Work up to heavy singles/doubles. Test 1RM in week 12." }
+    ]
+  },
+  maintenance: {
+    tagline: "Recompose. Refine. Redefine.",
+    repRange: "8–15 (Mixed)",
+    rest: "60–90 seconds between sets",
+    progression: "Focus on volume increases over load",
+    calorieAdjust: 0,
+    proteinMultiplier: 0.9,
+    carbsG: 220, fatsG: 70,
+    phases: [
+      { weeks: "1–4", name: "Assessment", desc: "Establish baseline, identify weak points. 3 sets, 10–12 reps." },
+      { weeks: "5–8", name: "Volume", desc: "Increase training volume. 4 sets, 8–12 reps." },
+      { weeks: "9–12", name: "Refinement", desc: "Specialisation phase targeting weak areas. 4–5 sets, varied rep ranges." }
+    ]
+  },
+  athletic: {
+    tagline: "Faster. More Powerful. More Durable.",
+    repRange: "4–12 (Power + Strength)",
+    rest: "90–180 seconds between sets",
+    progression: "Wave loading — heavy/light weeks",
+    calorieAdjust: +300,
+    proteinMultiplier: 1.0,
+    carbsG: 310, fatsG: 75,
+    phases: [
+      { weeks: "1–4", name: "Base Build", desc: "General strength foundation. 4 sets, 8–10 reps. Include plyometrics." },
+      { weeks: "5–8", name: "Power", desc: "Explosive compound movements. 4–5 sets, 4–6 reps at high intent." },
+      { weeks: "9–12", name: "Sport Transfer", desc: "Competition prep. Heavy compound + speed work. Reduce volume, increase intensity." }
+    ]
+  }
+};
+
+const SPLITS = {
+  3: {
+    name: "Full Body × 3",
+    days: [
+      { label: "Day 01", focus: "Full Body A", exercises: [
+        ["Barbell Back Squat","4×5–6"],["Barbell Bench Press","3×8–10"],["Barbell Row","3×8–10"],
+        ["Romanian Deadlift","3×10–12"],["Lateral Raises","3×15"],["Plank","3×45 sec"]
+      ]},
+      { label: "Day 02", focus: "Full Body B", exercises: [
+        ["Deadlift","4×4–5"],["Overhead Press","3×8–10"],["Lat Pulldown","3×10–12"],
+        ["Leg Press","3×12"],["Face Pulls","3×15"],["Cable Woodchop","3×12"]
+      ]},
+      { label: "Day 03", focus: "Full Body C", exercises: [
+        ["Hip Thrust","4×10–12"],["Incline DB Press","3×10–12"],["Seated Cable Row","3×12"],
+        ["Bulgarian Split Squat","3×10 ea"],["Hammer Curl","3×12"],["Ab Wheel","3×10"]
+      ]}
+    ]
+  },
+  4: {
+    name: "Upper / Lower × 2",
+    days: [
+      { label: "Day 01", focus: "Lower — Quad", exercises: [
+        ["Barbell Back Squat","4×6–8"],["Leg Press","3×12–15"],["Romanian Deadlift","3×10–12"],
+        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Seated Calf Raise","4×15"]
+      ]},
+      { label: "Day 02", focus: "Upper — Push", exercises: [
+        ["Barbell Bench Press","4×6–8"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
+        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12"],["Tricep OH Ext.","3×12"]
+      ]},
+      { label: "Day 03", focus: "Lower — Posterior", exercises: [
+        ["Hip Thrust","4×10–12"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
+        ["Lying Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15"]
+      ]},
+      { label: "Day 04", focus: "Upper — Pull", exercises: [
+        ["Barbell Row","4×6–8"],["Lat Pulldown","3×10–12"],["Seated Cable Row","3×12"],
+        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
+      ]}
+    ]
+  },
+  5: {
+    name: "Upper / Lower / Push / Pull / Full Body",
+    days: [
+      { label: "Day 01", focus: "Lower — Quad Dominant", exercises: [
+        ["Barbell Back Squat","4×6–8 · Heavy"],["Romanian Deadlift","3×10–12"],["Leg Press","3×12–15"],
+        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Seated Calf Raise","4×15–20"]
+      ]},
+      { label: "Day 02", focus: "Upper — Push Focus", exercises: [
+        ["Barbell Bench Press","4×6–8 · Heavy"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
+        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12–15"],["Tricep OH Ext.","3×12"]
+      ]},
+      { label: "Day 03", focus: "Lower — Glute & Hamstring", exercises: [
+        ["Hip Thrust (Barbell)","4×10–12 · Heavy"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
+        ["Lying Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15–20"]
+      ]},
+      { label: "Day 04", focus: "Upper — Pull Focus", exercises: [
+        ["Barbell Row","4×6–8 · Heavy"],["Lat Pulldown","3×10–12"],["Seated Cable Row","3×12"],
+        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
+      ]},
+      { label: "Day 05", focus: "Full Body — Power + Core", exercises: [
+        ["Deadlift (Conventional)","5×5 · Max Effort"],["DB Shoulder Press","3×10"],["Single-Leg RDL","3×10 ea"],
+        ["Chest-Supported Row","3×12"],["Plank","3×45–60 sec"],["Cable Woodchop","3×12 ea"]
+      ]}
+    ]
+  },
+  6: {
+    name: "Push / Pull / Legs × 2",
+    days: [
+      { label: "Day 01", focus: "Push A", exercises: [
+        ["Barbell Bench Press","4×6–8"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
+        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12"],["Tricep Dips","3×10–12"]
+      ]},
+      { label: "Day 02", focus: "Pull A", exercises: [
+        ["Deadlift","4×4–6"],["Barbell Row","4×6–8"],["Lat Pulldown","3×10–12"],
+        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
+      ]},
+      { label: "Day 03", focus: "Legs A — Quad", exercises: [
+        ["Barbell Back Squat","5×5–6"],["Leg Press","3×12–15"],["Romanian Deadlift","3×10–12"],
+        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Calf Raise","4×15"]
+      ]},
+      { label: "Day 04", focus: "Push B", exercises: [
+        ["Overhead Press","4×6–8"],["Incline Barbell Press","3×8–10"],["Cable Fly","3×12–15"],
+        ["Arnold Press","3×10"],["Lateral Raises","4×12"],["Skull Crushers","3×10"]
+      ]},
+      { label: "Day 05", focus: "Pull B", exercises: [
+        ["Weighted Pull-Ups","4×6–8"],["Seated Cable Row","3×10–12"],["Single-Arm DB Row","3×10 ea"],
+        ["Rear Delt Fly","3×15"],["Incline Curl","3×12"],["Cable Curl","3×15"]
+      ]},
+      { label: "Day 06", focus: "Legs B — Posterior", exercises: [
+        ["Hip Thrust","4×10–12"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
+        ["Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15"]
+      ]}
+    ]
+  }
+};
+
+const NUTRITION_TIPS = {
+  self_cook: {
+    title: "Home Kitchen Plan",
+    tips: [
+      "Meal prep 2–3 days at a time — batch cook protein (chicken, mince, eggs) and grains (rice, oats).",
+      "Keep your kitchen stocked with protein staples: chicken breast, eggs, Greek yoghurt, tinned tuna, legumes.",
+      "Use a food scale for the first 2–3 weeks to calibrate your eye — after that, hand portions work well.",
+      "Pre-make overnight oats or egg muffins for quick pre-training meals."
+    ]
+  },
+  mess_hall: {
+    title: "Mess Hall Strategy",
+    tips: [
+      "Always prioritise the highest-protein main — grilled chicken, beef, fish, eggs. Take a double serve where possible.",
+      "Add calorie-dense sides every meal: extra rice, potato, or bread adds 150–200 cal easily.",
+      "Don't skip dessert — mess desserts (custard, pudding, fruit crumble) are easy surplus calories.",
+      "Keep protein powder, mixed nuts, peanut butter sachets, and oats in your room to bridge any gaps.",
+      "A glass of full-fat milk with every meal adds ~150 cal and 8g protein with zero effort."
+    ]
+  },
+  office: {
+    title: "Office + Eating Out",
+    tips: [
+      "Default order when eating out: protein main + side of rice/potato + salad or veg.",
+      "Meal prep lunch 3–4 days per week to control quality and cost.",
+      "Keep desk snacks: mixed nuts, protein bars, Greek yoghurt pouches, rice cakes with peanut butter.",
+      "At restaurants: ask for sauces on the side, substitute chips for salad or extra veg when cutting."
+    ]
+  },
+  student: {
+    title: "Budget Student Plan",
+    tips: [
+      "Cheapest protein sources: eggs, tinned tuna, chicken thighs, legumes (lentils, chickpeas), Greek yoghurt.",
+      "Bulk buy oats, rice, pasta, frozen veg — these form the backbone of every meal.",
+      "A 1kg tub of whey protein is cost-effective per gram of protein vs most whole foods.",
+      "Cook in bulk — a pot of lentil soup or chicken and rice lasts 3–4 days."
+    ]
+  },
+  family: {
+    title: "Family Meal Strategy",
+    tips: [
+      "Add a protein source to whatever the family is having — extra chicken, a tin of tuna, or eggs on the side.",
+      "Control your portions of starchy sides and double your protein serve at dinner.",
+      "Keep personal snacks (protein shake, nuts, Greek yoghurt) to supplement family meals that run low on protein.",
+      "Communicate your goals — most families will adapt meal choices slightly once they understand why."
+    ]
+  }
+};
+
+const SUPPLEMENTS = [
+  { name: "Creatine Monohydrate", dose: "3–5g Daily", desc: "Most researched supplement in sports science. Increases strength, power, and muscle volume. Take daily — timing doesn't matter." },
+  { name: "Whey Protein", dose: "1 scoop post-workout", desc: "Convenient way to hit protein targets if food alone isn't enough. Use as a supplement to meals, not a replacement." },
+  { name: "Vitamin D3 + K2", dose: "1,000–2,000 IU Daily", desc: "Most people are deficient. Supports bone health, hormone regulation, and muscle recovery." },
+  { name: "Magnesium Glycinate", dose: "200–400mg at night", desc: "Supports sleep quality, muscle recovery, and reduces cramping. Especially useful for those training heavily." },
+  { name: "Omega-3 Fish Oil", dose: "1–2g EPA+DHA Daily", desc: "Reduces muscle soreness, supports joint health. Take with a fat-containing meal." }
+];
+
+// ── CALCULATIONS ──
+
+function calcTDEE(weightKg, goal) {
+  // Simple estimate: 2200 base + adjustment for goal
+  let base = weightKg ? (weightKg * 30) : 2200;
+  const prog = PROGRAMS[goal];
+  return Math.round(base + prog.calorieAdjust);
+}
+
+function calcProtein(weightKg, goal) {
+  const prog = PROGRAMS[goal];
+  const weightLbs = weightKg ? weightKg * 2.205 : 130;
+  return Math.round(weightLbs * prog.proteinMultiplier);
+}
+
+// ── GENERATE ──
+
+document.getElementById('programForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  generateProgram();
+});
+
+function generateProgram() {
+  const name = document.getElementById('name').value || 'Athlete';
+  const weightKg = parseFloat(document.getElementById('weight').value) || null;
+  const goal = document.getElementById('goal').value;
+  const level = document.getElementById('level').value;
+  const days = parseInt(document.getElementById('days').value);
+  const equipment = document.getElementById('equipment').value;
+  const duration = document.getElementById('duration').value;
+  const eatingSit = document.getElementById('eatingSit').value;
+  const notesVal = document.getElementById('notes').value;
+  const customCal = document.getElementById('calories').value;
+
+  const prog = PROGRAMS[goal];
+  const split = SPLITS[days];
+
+  const calories = customCal ? parseInt(customCal) : calcTDEE(weightKg, goal);
+  const protein = calcProtein(weightKg, goal);
+  const carbs = prog.carbsG;
+  const fats = prog.fatsG;
+
+  const goalLabel = document.getElementById('goal').options[document.getElementById('goal').selectedIndex].text;
+  const levelLabel = document.getElementById('level').options[document.getElementById('level').selectedIndex].text;
+
+  // Adjust phases if duration != 12
+  let phases = prog.phases;
+  if (duration === '8') {
+    phases = [
+      { weeks: "1–3", name: phases[0].name, desc: phases[0].desc },
+      { weeks: "4–6", name: phases[1].name, desc: phases[1].desc },
+      { weeks: "7–8", name: phases[2].name, desc: phases[2].desc }
+    ];
+  } else if (duration === '16') {
+    phases = [
+      { weeks: "1–5", name: phases[0].name, desc: phases[0].desc },
+      { weeks: "6–11", name: phases[1].name, desc: phases[1].desc },
+      { weeks: "12–16", name: phases[2].name, desc: phases[2].desc }
+    ];
+  }
+
+  const nutrition = NUTRITION_TIPS[eatingSit];
+
+  // Build output
+  const daysHTML = split.days.map(day => `
+    <div class="day-card">
+      <div class="day-header">${day.label} <span>${day.focus}</span></div>
+      <div class="exercises">
+        ${day.exercises.map(([ex, sets]) => `
+          <div class="ex-row">
+            <span class="ex-name">${ex}</span>
+            <span class="ex-sets">${sets}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  const phasesHTML = phases.map(p => `
+    <tr>
+      <td><strong>Weeks ${p.weeks}</strong></td>
+      <td><strong>${p.name}</strong></td>
+      <td>${p.desc}</td>
+    </tr>
+  `).join('');
+
+  const suppHTML = SUPPLEMENTS.map(s => `
+    <div class="ex-row">
+      <span class="ex-name">${s.name} <span style="color:var(--muted);font-size:11px;font-weight:400">— ${s.dose}</span></span>
+    </div>
+    <p class="prog-para" style="font-size:12px;color:#666;margin:2px 0 10px 0">${s.desc}</p>
+  `).join('');
+
+  const notesHTML = notesVal ? `
+    <div class="prog-section">
+      <h3>Notes &amp; Considerations</h3>
+      <p class="prog-para">${notesVal}</p>
+    </div>
+  ` : '';
+
+  const html = `
+    <div class="program-header">
+      <div class="prog-name">${name.toUpperCase()}'S PERSONAL PROGRAM</div>
+      <div class="prog-tagline">${prog.tagline}</div>
+      <div class="meta-row">
+        <div class="meta-item"><div class="meta-val">${duration}</div><div class="meta-key">Weeks</div></div>
+        <div class="meta-item"><div class="meta-val">${days}</div><div class="meta-key">Days/Week</div></div>
+        <div class="meta-item"><div class="meta-val">~${calories.toLocaleString()}</div><div class="meta-key">Cal/Day</div></div>
+        <div class="meta-item"><div class="meta-val">${goalLabel.split('+')[0].trim()}</div><div class="meta-key">Goal</div></div>
+        <div class="meta-item"><div class="meta-val">${levelLabel.split('(')[0].trim()}</div><div class="meta-key">Level</div></div>
+      </div>
+    </div>
+
+    <div class="program-body">
+
+      <div class="prog-section">
+        <h3>${duration}-Week Periodisation</h3>
+        <table class="phase-table">
+          <thead><tr><th>Period</th><th>Phase</th><th>Focus</th></tr></thead>
+          <tbody>${phasesHTML}</tbody>
+        </table>
+      </div>
+
+      <div class="prog-section">
+        <h3>${split.name} — Weekly Split</h3>
+        <div class="days-grid">${daysHTML}</div>
+        <p class="prog-para" style="margin-top:14px"><strong>Progressive Overload Rule:</strong> Every 1–2 weeks, aim to add 2.5–5 kg to main compound lifts. If you can complete all reps with good form, you're ready to increase weight.</p>
+        <p class="prog-para"><strong>Rep Range:</strong> ${prog.repRange} &nbsp;|&nbsp; <strong>Rest:</strong> ${prog.rest} &nbsp;|&nbsp; <strong>Progression:</strong> ${prog.progression}</p>
+      </div>
+
+      <div class="prog-section">
+        <h3>Nutrition Plan — ${nutrition.title}</h3>
+        <div class="macro-grid">
+          <div class="macro-card">
+            <div class="macro-val">${calories.toLocaleString()}</div>
+            <div class="macro-unit">calories/day</div>
+            <div class="macro-label">Total Calories</div>
+          </div>
+          <div class="macro-card">
+            <div class="macro-val">${protein}g</div>
+            <div class="macro-unit">per day</div>
+            <div class="macro-label">Protein</div>
+          </div>
+          <div class="macro-card">
+            <div class="macro-val">${carbs}g</div>
+            <div class="macro-unit">per day</div>
+            <div class="macro-label">Carbohydrates</div>
+          </div>
+        </div>
+        <ul class="prog-list">
+          ${nutrition.tips.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="prog-section">
+        <h3>Supplements — Evidence-Based Picks</h3>
+        <p class="prog-para" style="margin-bottom:12px;font-style:italic;color:var(--muted)">Supplements are just that — supplemental. Food comes first. Always consult a doctor before starting, especially iron or vitamin D.</p>
+        ${suppHTML}
+      </div>
+
+      <div class="prog-section">
+        <h3>Recovery &amp; Tracking</h3>
+        <ul class="prog-list">
+          <li><strong>Sleep:</strong> 7–9 hours per night — this is when muscle is actually built.</li>
+          <li><strong>Deload:</strong> Every 4th week, reduce volume by 40% to let your body supercompensate.</li>
+          <li><strong>Weigh-ins:</strong> 2–3x per week, same time (morning). Average the week — daily fluctuations are normal.</li>
+          <li><strong>Measurements:</strong> Tape measure hips, waist, thighs, arms every 4 weeks.</li>
+          <li><strong>Lift tracking:</strong> Use Strong, Hevy, or a notebook. Log weight + reps every session.</li>
+          <li><strong>Test lifts:</strong> Every 4 weeks attempt a new 1–3 rep max on your main compound lifts.</li>
+        </ul>
+      </div>
+
+      ${notesHTML}
+
+      <div class="prog-section" style="background:var(--ink);padding:24px;border-radius:4px;margin-top:32px">
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--accent2);margin-bottom:8px">THE MOST IMPORTANT THING</p>
+        <p style="color:#ccc;line-height:1.7;font-size:14px">Consistency beats perfection every single time. Missing one meal won't ruin your progress. Missing one workout won't either. What matters is showing up — week after week, month after month. You've got everything you need. Trust the process, ${name}.</p>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-action" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn-action" onclick="document.getElementById('output').classList.add('hidden');window.scrollTo(0,0)">Edit Details</button>
+      </div>
+
+    </div>
+  `;
+
+  const outputEl = document.getElementById('output');
+  outputEl.innerHTML = html;
+  outputEl.classList.remove('hidden');
+  outputEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
