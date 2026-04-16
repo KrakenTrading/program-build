@@ -490,100 +490,158 @@ const PROGRAMS = {
   }
 };
 
-const SPLITS = {
-  3: {
-    name: "Full Body × 3",
-    days: [
-      { label: "Day 01", focus: "Full Body A", exercises: [
-        ["Barbell Back Squat","4×5–6"],["Barbell Bench Press","3×8–10"],["Barbell Row","3×8–10"],
-        ["Romanian Deadlift","3×10–12"],["Lateral Raises","3×15"],["Plank","3×45 sec"]
-      ]},
-      { label: "Day 02", focus: "Full Body B", exercises: [
-        ["Deadlift","4×4–5"],["Overhead Press","3×8–10"],["Lat Pulldown","3×10–12"],
-        ["Leg Press","3×12"],["Face Pulls","3×15"],["Cable Woodchop","3×12"]
-      ]},
-      { label: "Day 03", focus: "Full Body C", exercises: [
-        ["Hip Thrust","4×10–12"],["Incline DB Press","3×10–12"],["Seated Cable Row","3×12"],
-        ["Bulgarian Split Squat","3×10 ea"],["Hammer Curl","3×12"],["Ab Wheel","3×10"]
-      ]}
-    ]
-  },
-  4: {
-    name: "Upper / Lower × 2",
-    days: [
-      { label: "Day 01", focus: "Lower — Quad", exercises: [
-        ["Barbell Back Squat","4×6–8"],["Leg Press","3×12–15"],["Romanian Deadlift","3×10–12"],
-        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Seated Calf Raise","4×15"]
-      ]},
-      { label: "Day 02", focus: "Upper — Push", exercises: [
-        ["Barbell Bench Press","4×6–8"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
-        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12"],["Tricep OH Ext.","3×12"]
-      ]},
-      { label: "Day 03", focus: "Lower — Posterior", exercises: [
-        ["Hip Thrust","4×10–12"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
-        ["Lying Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15"]
-      ]},
-      { label: "Day 04", focus: "Upper — Pull", exercises: [
-        ["Barbell Row","4×6–8"],["Lat Pulldown","3×10–12"],["Seated Cable Row","3×12"],
-        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
-      ]}
-    ]
-  },
-  5: {
-    name: "Upper / Lower / Push / Pull / Full Body",
-    days: [
-      { label: "Day 01", focus: "Lower — Quad Dominant", exercises: [
-        ["Barbell Back Squat","4×6–8 · Heavy"],["Romanian Deadlift","3×10–12"],["Leg Press","3×12–15"],
-        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Seated Calf Raise","4×15–20"]
-      ]},
-      { label: "Day 02", focus: "Upper — Push Focus", exercises: [
-        ["Barbell Bench Press","4×6–8 · Heavy"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
-        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12–15"],["Tricep OH Ext.","3×12"]
-      ]},
-      { label: "Day 03", focus: "Lower — Glute & Hamstring", exercises: [
-        ["Hip Thrust (Barbell)","4×10–12 · Heavy"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
-        ["Lying Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15–20"]
-      ]},
-      { label: "Day 04", focus: "Upper — Pull Focus", exercises: [
-        ["Barbell Row","4×6–8 · Heavy"],["Lat Pulldown","3×10–12"],["Seated Cable Row","3×12"],
-        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
-      ]},
-      { label: "Day 05", focus: "Full Body — Power + Core", exercises: [
-        ["Deadlift (Conventional)","5×5 · Max Effort"],["DB Shoulder Press","3×10"],["Single-Leg RDL","3×10 ea"],
-        ["Chest-Supported Row","3×12"],["Plank","3×45–60 sec"],["Cable Woodchop","3×12 ea"]
-      ]}
-    ]
-  },
-  6: {
-    name: "Push / Pull / Legs × 2",
-    days: [
-      { label: "Day 01", focus: "Push A", exercises: [
-        ["Barbell Bench Press","4×6–8"],["Overhead Press","3×8–10"],["Incline DB Press","3×10–12"],
-        ["Lateral Raises","4×15"],["Cable Tricep Pushdown","3×12"],["Tricep Dips","3×10–12"]
-      ]},
-      { label: "Day 02", focus: "Pull A", exercises: [
-        ["Deadlift","4×4–6"],["Barbell Row","4×6–8"],["Lat Pulldown","3×10–12"],
-        ["Face Pulls","3×15–20"],["Barbell Curl","4×10–12"],["Hammer Curl","3×12"]
-      ]},
-      { label: "Day 03", focus: "Legs A — Quad", exercises: [
-        ["Barbell Back Squat","5×5–6"],["Leg Press","3×12–15"],["Romanian Deadlift","3×10–12"],
-        ["Walking Lunges","3×12 ea"],["Leg Extension","3×15"],["Calf Raise","4×15"]
-      ]},
-      { label: "Day 04", focus: "Push B", exercises: [
-        ["Overhead Press","4×6–8"],["Incline Barbell Press","3×8–10"],["Cable Fly","3×12–15"],
-        ["Arnold Press","3×10"],["Lateral Raises","4×12"],["Skull Crushers","3×10"]
-      ]},
-      { label: "Day 05", focus: "Pull B", exercises: [
-        ["Weighted Pull-Ups","4×6–8"],["Seated Cable Row","3×10–12"],["Single-Arm DB Row","3×10 ea"],
-        ["Rear Delt Fly","3×15"],["Incline Curl","3×12"],["Cable Curl","3×15"]
-      ]},
-      { label: "Day 06", focus: "Legs B — Posterior", exercises: [
-        ["Hip Thrust","4×10–12"],["Sumo Deadlift","4×6–8"],["Bulgarian Split Squat","3×10 ea"],
-        ["Leg Curl","3×12–15"],["Cable Kickback","3×15 ea"],["Standing Calf Raise","4×15"]
-      ]}
-    ]
-  }
+// ── EXERCISE LIBRARY BY EQUIPMENT ──
+// Each slot has options per equipment type: full_gym, home_full, home_dumbbells, barbell_only, bodyweight
+const EX = {
+  // QUADS / LOWER PUSH
+  squat:        { full_gym:"Barbell Back Squat", home_full:"Barbell Back Squat", barbell_only:"Barbell Back Squat", home_dumbbells:"DB Goblet Squat", bodyweight:"Bodyweight Squat" },
+  legpress:     { full_gym:"Leg Press", home_full:"DB Goblet Squat", barbell_only:"Barbell Front Squat", home_dumbbells:"DB Sumo Squat", bodyweight:"Sumo Squat" },
+  lunge:        { full_gym:"Walking Lunges", home_full:"Walking Lunges", barbell_only:"Barbell Lunge", home_dumbbells:"DB Walking Lunges", bodyweight:"Walking Lunges" },
+  legext:       { full_gym:"Leg Extension", home_full:"DB Step-Up", barbell_only:"Barbell Step-Up", home_dumbbells:"DB Step-Up", bodyweight:"Step-Up (bodyweight)" },
+  calfS:        { full_gym:"Seated Calf Raise", home_full:"Standing Calf Raise", barbell_only:"Standing Calf Raise", home_dumbbells:"DB Calf Raise", bodyweight:"Calf Raise (bodyweight)" },
+  calfSt:       { full_gym:"Standing Calf Raise", home_full:"Standing Calf Raise", barbell_only:"Standing Calf Raise", home_dumbbells:"DB Calf Raise", bodyweight:"Single-Leg Calf Raise" },
+  // POSTERIOR CHAIN
+  rdl:          { full_gym:"Romanian Deadlift", home_full:"Barbell RDL", barbell_only:"Romanian Deadlift", home_dumbbells:"DB Romanian Deadlift", bodyweight:"Single-Leg RDL (BW)" },
+  deadlift:     { full_gym:"Deadlift (Conventional)", home_full:"Deadlift (Conventional)", barbell_only:"Deadlift (Conventional)", home_dumbbells:"DB Deadlift", bodyweight:"Single-Leg RDL (BW)" },
+  hipthrust:    { full_gym:"Hip Thrust (Barbell)", home_full:"Hip Thrust (Barbell)", barbell_only:"Hip Thrust (Barbell)", home_dumbbells:"DB Hip Thrust", bodyweight:"Glute Bridge" },
+  sumodl:       { full_gym:"Sumo Deadlift", home_full:"Sumo Deadlift", barbell_only:"Sumo Deadlift", home_dumbbells:"DB Sumo Deadlift", bodyweight:"Sumo Squat Pulse" },
+  bss:          { full_gym:"Bulgarian Split Squat", home_full:"Bulgarian Split Squat", barbell_only:"Bulgarian Split Squat", home_dumbbells:"DB Bulgarian Split Squat", bodyweight:"Bulgarian Split Squat" },
+  legcurl:      { full_gym:"Lying Leg Curl", home_full:"DB Leg Curl (prone)", barbell_only:"Barbell Good Morning", home_dumbbells:"DB Leg Curl (prone)", bodyweight:"Nordic Curl" },
+  kickback:     { full_gym:"Cable Kickback", home_full:"Resistance Band Kickback", barbell_only:"Resistance Band Kickback", home_dumbbells:"DB Kickback", bodyweight:"Donkey Kick" },
+  slrdl:        { full_gym:"Single-Leg RDL", home_full:"Single-Leg RDL", barbell_only:"Single-Leg RDL", home_dumbbells:"DB Single-Leg RDL", bodyweight:"Single-Leg RDL (BW)" },
+  // PUSH — CHEST
+  bench:        { full_gym:"Barbell Bench Press", home_full:"Barbell Bench Press", barbell_only:"Barbell Bench Press", home_dumbbells:"DB Bench Press", bodyweight:"Push-Up" },
+  incbench:     { full_gym:"Incline DB Press", home_full:"Incline DB Press", barbell_only:"Incline Barbell Press", home_dumbbells:"Incline DB Press", bodyweight:"Incline Push-Up" },
+  incbarbench:  { full_gym:"Incline Barbell Press", home_full:"Incline Barbell Press", barbell_only:"Incline Barbell Press", home_dumbbells:"Incline DB Press", bodyweight:"Decline Push-Up" },
+  fly:          { full_gym:"Cable Fly", home_full:"DB Fly", barbell_only:"DB Fly", home_dumbbells:"DB Fly", bodyweight:"Push-Up (wide grip)" },
+  dips:         { full_gym:"Tricep Dips", home_full:"Tricep Dips", barbell_only:"Tricep Dips", home_dumbbells:"Tricep Dips", bodyweight:"Tricep Dips" },
+  // PUSH — SHOULDERS
+  ohp:          { full_gym:"Overhead Press", home_full:"Barbell Overhead Press", barbell_only:"Barbell Overhead Press", home_dumbbells:"DB Shoulder Press", bodyweight:"Pike Push-Up" },
+  dbohp:        { full_gym:"DB Shoulder Press", home_full:"DB Shoulder Press", barbell_only:"Barbell Overhead Press", home_dumbbells:"DB Shoulder Press", bodyweight:"Pike Push-Up" },
+  lateral:      { full_gym:"Lateral Raises", home_full:"DB Lateral Raises", barbell_only:"DB Lateral Raises", home_dumbbells:"DB Lateral Raises", bodyweight:"Lateral Raise (water bottles)" },
+  arnold:       { full_gym:"Arnold Press", home_full:"Arnold Press", barbell_only:"Barbell Push Press", home_dumbbells:"Arnold Press", bodyweight:"Pike Push-Up" },
+  // PUSH — TRICEPS
+  tricepPD:     { full_gym:"Cable Tricep Pushdown", home_full:"DB Tricep Kickback", barbell_only:"Close-Grip Bench Press", home_dumbbells:"DB Tricep Kickback", bodyweight:"Diamond Push-Up" },
+  tricepOH:     { full_gym:"Tricep Overhead Ext.", home_full:"DB Overhead Tricep Ext.", barbell_only:"Barbell Skull Crusher", home_dumbbells:"DB Overhead Tricep Ext.", bodyweight:"Tricep Dip" },
+  skullcrush:   { full_gym:"Skull Crushers", home_full:"DB Skull Crushers", barbell_only:"Barbell Skull Crushers", home_dumbbells:"DB Skull Crushers", bodyweight:"Diamond Push-Up" },
+  // PULL — BACK
+  row:          { full_gym:"Barbell Row", home_full:"Barbell Row", barbell_only:"Barbell Row", home_dumbbells:"DB Bent-Over Row", bodyweight:"Inverted Row" },
+  pulldown:     { full_gym:"Lat Pulldown", home_full:"Pull-Up / Chin-Up", barbell_only:"Pull-Up / Chin-Up", home_dumbbells:"DB Pullover", bodyweight:"Pull-Up" },
+  cablerow:     { full_gym:"Seated Cable Row", home_full:"DB Bent-Over Row", barbell_only:"Barbell Row (close grip)", home_dumbbells:"DB Bent-Over Row", bodyweight:"Inverted Row" },
+  facepull:     { full_gym:"Face Pulls", home_full:"Band Face Pull", barbell_only:"Band Face Pull", home_dumbbells:"DB Rear Delt Fly", bodyweight:"Prone Y-Raise" },
+  pullup:       { full_gym:"Weighted Pull-Ups", home_full:"Pull-Ups", barbell_only:"Pull-Ups", home_dumbbells:"DB Pullover", bodyweight:"Pull-Up" },
+  dbrow:        { full_gym:"Single-Arm DB Row", home_full:"Single-Arm DB Row", barbell_only:"Barbell Row", home_dumbbells:"Single-Arm DB Row", bodyweight:"Inverted Row" },
+  csrow:        { full_gym:"Chest-Supported Row", home_full:"DB Chest-Supported Row", barbell_only:"Barbell Row (supported)", home_dumbbells:"DB Chest-Supported Row", bodyweight:"Superman Hold" },
+  reardelt:     { full_gym:"Rear Delt Fly", home_full:"DB Rear Delt Fly", barbell_only:"DB Rear Delt Fly", home_dumbbells:"DB Rear Delt Fly", bodyweight:"Prone Y-Raise" },
+  // PULL — BICEPS
+  curl:         { full_gym:"Barbell / DB Curl", home_full:"Barbell Curl", barbell_only:"Barbell Curl", home_dumbbells:"DB Curl", bodyweight:"Chin-Up (supinated)" },
+  hammer:       { full_gym:"Hammer Curl", home_full:"Hammer Curl", barbell_only:"Hammer Curl", home_dumbbells:"Hammer Curl", bodyweight:"Towel Curl" },
+  inclcurl:     { full_gym:"Incline Curl", home_full:"Incline DB Curl", barbell_only:"Barbell Curl", home_dumbbells:"Incline DB Curl", bodyweight:"Chin-Up" },
+  cablecurl:    { full_gym:"Cable Curl", home_full:"DB Curl", barbell_only:"Barbell Curl", home_dumbbells:"DB Curl", bodyweight:"Chin-Up" },
+  // CORE
+  plank:        { full_gym:"Plank", home_full:"Plank", barbell_only:"Plank", home_dumbbells:"Plank", bodyweight:"Plank" },
+  woodchop:     { full_gym:"Cable Woodchop", home_full:"DB Woodchop", barbell_only:"DB Woodchop", home_dumbbells:"DB Woodchop", bodyweight:"Oblique Crunch" },
+  abwheel:      { full_gym:"Ab Wheel", home_full:"Ab Wheel", barbell_only:"Ab Wheel", home_dumbbells:"DB Rollout", bodyweight:"Hollow Body Hold" },
 };
+
+function getSplit(days, equipment) {
+  const e = equipment;
+  const splits = {
+    3: {
+      name: "Full Body × 3",
+      days: [
+        { label:"Day 01", focus:"Full Body A", exercises:[
+          [EX.squat[e],"4×5–6"],[EX.bench[e],"3×8–10"],[EX.row[e],"3×8–10"],
+          [EX.rdl[e],"3×10–12"],[EX.lateral[e],"3×15"],[EX.plank[e],"3×45 sec"]
+        ]},
+        { label:"Day 02", focus:"Full Body B", exercises:[
+          [EX.deadlift[e],"4×4–5"],[EX.ohp[e],"3×8–10"],[EX.pulldown[e],"3×10–12"],
+          [EX.lunge[e],"3×12 ea"],[EX.facepull[e],"3×15"],[EX.woodchop[e],"3×12"]
+        ]},
+        { label:"Day 03", focus:"Full Body C", exercises:[
+          [EX.hipthrust[e],"4×10–12"],[EX.incbench[e],"3×10–12"],[EX.cablerow[e],"3×12"],
+          [EX.bss[e],"3×10 ea"],[EX.hammer[e],"3×12"],[EX.abwheel[e],"3×10"]
+        ]}
+      ]
+    },
+    4: {
+      name: "Upper / Lower × 2",
+      days: [
+        { label:"Day 01", focus:"Lower — Quad", exercises:[
+          [EX.squat[e],"4×6–8"],[EX.legpress[e],"3×12–15"],[EX.rdl[e],"3×10–12"],
+          [EX.lunge[e],"3×12 ea"],[EX.legext[e],"3×15"],[EX.calfS[e],"4×15"]
+        ]},
+        { label:"Day 02", focus:"Upper — Push", exercises:[
+          [EX.bench[e],"4×6–8"],[EX.ohp[e],"3×8–10"],[EX.incbench[e],"3×10–12"],
+          [EX.lateral[e],"4×15"],[EX.tricepPD[e],"3×12"],[EX.tricepOH[e],"3×12"]
+        ]},
+        { label:"Day 03", focus:"Lower — Posterior", exercises:[
+          [EX.hipthrust[e],"4×10–12"],[EX.sumodl[e],"4×6–8"],[EX.bss[e],"3×10 ea"],
+          [EX.legcurl[e],"3×12–15"],[EX.kickback[e],"3×15 ea"],[EX.calfSt[e],"4×15"]
+        ]},
+        { label:"Day 04", focus:"Upper — Pull", exercises:[
+          [EX.row[e],"4×6–8"],[EX.pulldown[e],"3×10–12"],[EX.cablerow[e],"3×12"],
+          [EX.facepull[e],"3×15–20"],[EX.curl[e],"4×10–12"],[EX.hammer[e],"3×12"]
+        ]}
+      ]
+    },
+    5: {
+      name: "Upper / Lower / Push / Pull / Full Body",
+      days: [
+        { label:"Day 01", focus:"Lower — Quad Dominant", exercises:[
+          [EX.squat[e],"4×6–8 · Heavy"],[EX.rdl[e],"3×10–12"],[EX.legpress[e],"3×12–15"],
+          [EX.lunge[e],"3×12 ea"],[EX.legext[e],"3×15"],[EX.calfS[e],"4×15–20"]
+        ]},
+        { label:"Day 02", focus:"Upper — Push Focus", exercises:[
+          [EX.bench[e],"4×6–8 · Heavy"],[EX.ohp[e],"3×8–10"],[EX.incbench[e],"3×10–12"],
+          [EX.lateral[e],"4×15"],[EX.tricepPD[e],"3×12–15"],[EX.tricepOH[e],"3×12"]
+        ]},
+        { label:"Day 03", focus:"Lower — Glute & Hamstring", exercises:[
+          [EX.hipthrust[e],"4×10–12 · Heavy"],[EX.sumodl[e],"4×6–8"],[EX.bss[e],"3×10 ea"],
+          [EX.legcurl[e],"3×12–15"],[EX.kickback[e],"3×15 ea"],[EX.calfSt[e],"4×15–20"]
+        ]},
+        { label:"Day 04", focus:"Upper — Pull Focus", exercises:[
+          [EX.row[e],"4×6–8 · Heavy"],[EX.pulldown[e],"3×10–12"],[EX.cablerow[e],"3×12"],
+          [EX.facepull[e],"3×15–20"],[EX.curl[e],"4×10–12"],[EX.hammer[e],"3×12"]
+        ]},
+        { label:"Day 05", focus:"Full Body — Power + Core", exercises:[
+          [EX.deadlift[e],"5×5 · Max Effort"],[EX.dbohp[e],"3×10"],[EX.slrdl[e],"3×10 ea"],
+          [EX.csrow[e],"3×12"],[EX.plank[e],"3×45–60 sec"],[EX.woodchop[e],"3×12 ea"]
+        ]}
+      ]
+    },
+    6: {
+      name: "Push / Pull / Legs × 2",
+      days: [
+        { label:"Day 01", focus:"Push A", exercises:[
+          [EX.bench[e],"4×6–8"],[EX.ohp[e],"3×8–10"],[EX.incbench[e],"3×10–12"],
+          [EX.lateral[e],"4×15"],[EX.tricepPD[e],"3×12"],[EX.dips[e],"3×10–12"]
+        ]},
+        { label:"Day 02", focus:"Pull A", exercises:[
+          [EX.deadlift[e],"4×4–6"],[EX.row[e],"4×6–8"],[EX.pulldown[e],"3×10–12"],
+          [EX.facepull[e],"3×15–20"],[EX.curl[e],"4×10–12"],[EX.hammer[e],"3×12"]
+        ]},
+        { label:"Day 03", focus:"Legs A — Quad", exercises:[
+          [EX.squat[e],"5×5–6"],[EX.legpress[e],"3×12–15"],[EX.rdl[e],"3×10–12"],
+          [EX.lunge[e],"3×12 ea"],[EX.legext[e],"3×15"],[EX.calfSt[e],"4×15"]
+        ]},
+        { label:"Day 04", focus:"Push B", exercises:[
+          [EX.ohp[e],"4×6–8"],[EX.incbarbench[e],"3×8–10"],[EX.fly[e],"3×12–15"],
+          [EX.arnold[e],"3×10"],[EX.lateral[e],"4×12"],[EX.skullcrush[e],"3×10"]
+        ]},
+        { label:"Day 05", focus:"Pull B", exercises:[
+          [EX.pullup[e],"4×6–8"],[EX.cablerow[e],"3×10–12"],[EX.dbrow[e],"3×10 ea"],
+          [EX.reardelt[e],"3×15"],[EX.inclcurl[e],"3×12"],[EX.cablecurl[e],"3×15"]
+        ]},
+        { label:"Day 06", focus:"Legs B — Posterior", exercises:[
+          [EX.hipthrust[e],"4×10–12"],[EX.sumodl[e],"4×6–8"],[EX.bss[e],"3×10 ea"],
+          [EX.legcurl[e],"3×12–15"],[EX.kickback[e],"3×15 ea"],[EX.calfSt[e],"4×15"]
+        ]}
+      ]
+    }
+  };
+  return splits[days];
+}
 
 const NUTRITION_TIPS = {
   self_cook: {
@@ -677,7 +735,7 @@ function generateProgram() {
   const customCal = document.getElementById('calories').value;
 
   const prog = PROGRAMS[goal];
-  const split = SPLITS[days];
+  const split = getSplit(days, equipment);
 
   const calories = customCal ? parseInt(customCal) : calcTDEE(weightKg, goal);
   const protein = calcProtein(weightKg, goal);
